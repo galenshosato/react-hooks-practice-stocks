@@ -6,6 +6,7 @@ import SearchBar from "./SearchBar";
 function MainContainer() {
   const [stockList, setStockList] = useState([])
   const [portList, setPortList] = useState([])
+  const [filter, setFilter] = useState({type: 'tech'})
 
   useEffect(()=>{
     fetch('http://localhost:3001/stocks')
@@ -27,7 +28,7 @@ function MainContainer() {
   }
   
   function handleChange (event) {
-    console.log(event.target)
+    
     if(event.target.value === "Alphabetically") {
       setStockList(prev => [...prev].sort(function(a,b) {
         if (a.name < b.name) {
@@ -50,14 +51,20 @@ function MainContainer() {
     }
     
   }
+  
+  let filteredList = stockList.filter(stock => {
+    return stock.type === filter.type || filter.type === 'tech'
+  })
+  
+  
 
 
   return (
     <div>
-      <SearchBar stockList={stockList} setStockList={setStockList} handleChange={handleChange} />
+      <SearchBar setStockList={setStockList} handleChange={handleChange} filter={filter} setFilter={setFilter} />
       <div className="row">
         <div className="col-8">
-          <StockContainer stockList={stockList} setStockList={setStockList} buyStockClick={buyStockClick}/>
+          <StockContainer stockList={filteredList} setStockList={setStockList} buyStockClick={buyStockClick}/>
         </div>
         <div className="col-4">
           <PortfolioContainer portList={portList} setPortList={setPortList} />

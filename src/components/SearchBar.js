@@ -1,13 +1,12 @@
 import React from "react";
 
-function SearchBar({stockList, setStockList, handleChange}) {
+function SearchBar({handleChange, setFilter}) {
   
-  function handleFilter(event) {
-    setStockList(prev => [...prev].filter(newArray => {
-      return newArray.type === event.target.value
-    }))
-
+  function handleFilter (event) {
+    setFilter({type: event.target.value})
+    
   }
+
 
   return (
     <div>
