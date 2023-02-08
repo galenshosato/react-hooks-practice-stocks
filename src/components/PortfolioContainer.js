@@ -1,13 +1,20 @@
 import React from "react";
-import Stock from "./Stock";
+import Portstock from "./Portstock";
 
-function PortfolioContainer() {
+function PortfolioContainer({portList, setPortList}) {
+
+  function handlePortClick(id) {
+    setPortList(prev => prev.filter(newPort => {
+      return newPort.id !== id
+    }))
+  }
+
   return (
     <div>
       <h2>My Portfolio</h2>
-      {
-        //render your portfolio stocks here
-      }
+      {portList.map(stock => {
+       return <Portstock key={stock.id} stock={stock} handlePortClick={handlePortClick} /> 
+      })}
     </div>
   );
 }
